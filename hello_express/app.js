@@ -5,7 +5,7 @@ var express = require('express'),
 	Server = require('mongodb').Server;
 
 app.engine('html', cons.swig);
-app.set('view_engine', 'html');
+app.set('view engine', 'html');
 app.set('views', __dirname + "/views");
 
 var mongoclient = new MongoClient(new Server('localhost', 27017, {'native_parser':true}));
@@ -13,6 +13,7 @@ var db = mongoclient.db('course');
 
 app.get('/', function(req, res){
 	db.collection('hello_mongo_express').findOne({}, function(err, doc){
+		console.log(err,doc);
 		res.render('hello', doc);
 	});
 });
@@ -23,6 +24,6 @@ app.get('*', function(req, res){
 
 mongoclient.open(function(err, mongoClient){
 	if(err) throw err;
-	app.listen(8080);
+	app.listen(3000);
 });
-console.log("Express server started on port 8080");
+console.log("Express server started on port 3000");
